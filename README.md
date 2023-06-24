@@ -4,7 +4,10 @@
 
 First starting off with a QR code generator app.
 This app can dynamically create QR codes based on what is entered in the text field.
-![Demo](QrCodeApp/Images/QRCodeDemo.gif)
+
+<img src="QrCodeApp/Images/QRCodeDemo.gif" alt="GIF 1" width="500" height="500">
 
 You can also save the QR code for later.
-![Demo2](QrCodeApp/Images/QRCodeSavingDemo.gif)
+
+<img src="QrCodeApp/Images/QRCodeSavingDemo.gif" alt="GIF 2" width="700" height="600">
+
