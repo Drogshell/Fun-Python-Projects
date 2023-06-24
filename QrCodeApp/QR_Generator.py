@@ -4,14 +4,20 @@ from PIL import Image, ImageTk
 from tkinter import filedialog
 import qrcode
 
+try:
+    from ctypes import windll, byref, sizeof, c_int
+finally:
+    pass
+
 
 class App(ctk.CTk):
     def __init__(self):
         ctk.set_appearance_mode('light')
         super().__init__(fg_color="white")
-
+        self.update_title_bar()
         self.title("")
-        self.geometry("400x400")
+        self.geometry("600x600")
+        self.resizable(False, False)
         self.iconbitmap(
             r"C:\Active Coding Projects\Python\Simple_Python_TKinter_Projects\QrCodeApp\Images\Logo\empty.ico")
 
@@ -45,6 +51,13 @@ class App(ctk.CTk):
             file_path = filedialog.asksaveasfilename()
             if file_path:
                 self.raw_image.save(file_path + ".jpg")
+
+    def update_title_bar(self):
+        try:
+            HWND = windll.user32.GetParent(self.winfo_id())
+            windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x00FFFFFF)), sizeof(c_int))
+        finally:
+            pass
 
 
 class QRImageGenerator(tk.Canvas):
