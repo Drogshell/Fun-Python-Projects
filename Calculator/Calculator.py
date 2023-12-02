@@ -31,7 +31,9 @@ class Calculator(ctk.CTk):
 
         # Data
         self.result_string = ctk.StringVar(value='0')
-        self.formula_string = ctk.StringVar(value='test')
+        self.formula_string = ctk.StringVar(value='')
+        self.user_entered_numbers = []
+        self.full_operations = []
 
         # Widgets
         self.create_widgets()
@@ -51,7 +53,7 @@ class Calculator(ctk.CTk):
                text=OPERATORS['clear']['text'],
                col=OPERATORS['clear']['col'],
                row=OPERATORS['clear']['row'],
-               font= main_font)
+               font=main_font)
 
         Button(parent=self,
                func=self.percent,
@@ -60,32 +62,32 @@ class Calculator(ctk.CTk):
                row=OPERATORS['percent']['row'],
                font=main_font)
         invert_image = ctk.CTkImage(
-            light_image= Image.open(OPERATORS['invert']['image path']['dark']),
-            dark_image= Image.open(OPERATORS['invert']['image path']['light'])
+            light_image=Image.open(OPERATORS['invert']['image path']['dark']),
+            dark_image=Image.open(OPERATORS['invert']['image path']['light'])
         )
         ImageButton(
             parent=self,
-            func= self.invert,
-            col= OPERATORS['invert']['col'],
-            row= OPERATORS['invert']['row'],
-            image= invert_image
+            func=self.invert,
+            col=OPERATORS['invert']['col'],
+            row=OPERATORS['invert']['row'],
+            image=invert_image
         )
 
         for num, data in NUM_POSITIONS.items():
             NumberButton(
-                parent= self,
-                text= num,
+                parent=self,
+                text=num,
                 func=self.num_press,
                 col=data['col'],
                 row=data['row'],
-                font= main_font,
+                font=main_font,
                 span=data['span'])
 
         for operator, data in MATH_POSITIONS.items():
             if data['image path']:
                 divide_image = ctk.CTkImage(
-                    light_image= Image.open(data['image path']['dark']),
-                    dark_image= Image.open(data['image path']['light'])
+                    light_image=Image.open(data['image path']['dark']),
+                    dark_image=Image.open(data['image path']['light'])
                 )
                 MathImageButton(
                     parent=self,
@@ -108,19 +110,64 @@ class Calculator(ctk.CTk):
                 )
 
     def clear(self):
-        print('Get clear!')
+        self.result_string.set(0)
+        self.formula_string.set('')
+
+        self.user_entered_numbers.clear()
+        self.full_operations.clear()
 
     def percent(self):
-        print('Division anyone?')
+        if self.user_entered_numbers:
+            current_num = float(''.join(self.user_entered_numbers))
+            divided_num = current_num / 100
+
+            self.user_entered_numbers = list(str(divided_num))
+            self.result_string.set(''.join(self.user_entered_numbers))
 
     def invert(self):
-        print('Inverted')
+        current_number = ''.join(self.user_entered_numbers)
+        if current_number:
+            if float(current_number) > 0:
+                self.user_entered_numbers.insert(0, '-')
+            else:
+                del self.user_entered_numbers[0]
+
+        self.result_string.set(''.join(self.user_entered_numbers))
 
     def num_press(self, value):
-        print(value)
+        self.user_entered_numbers.append(str(value))
+        completed_number = ''.join(self.user_entered_numbers)
+        self.result_string.set(completed_number)
 
     def compute(self, value):
-        print(value)
+        completed_number = ''.join(self.user_entered_numbers)
+
+        if completed_number:
+            self.full_operations.append(completed_number)
+            if value != '=':
+                self.full_operations.append(value)
+                self.user_entered_numbers.clear()
+
+                self.result_string.set('')
+                self.formula_string.set(' '.join(self.full_operations))
+            else:
+                # Remember to be careful with eval, for a simple calculator like this there is not much of a security
+                # risk but for a larger more info sensitive app, this would be bad.
+                formula = ' '.join(self.full_operations)
+                result = eval(formula)
+
+                # Format result
+                if isinstance(result, float):
+                    if result.is_integer():
+                        result = int(result)
+                    else:
+                        result = round(result, 3)
+
+                self.full_operations.clear()
+                self.user_entered_numbers = [str(result)]
+
+                self.result_string.set(result)
+                self.formula_string.set(formula)
 
     def title_bar_colour(self, is_dark):
         try:
@@ -139,5 +186,5 @@ class OutPutLabel(ctk.CTkLabel):
 
 
 if __name__ == "__main__":
-    #Calculator(darkdetect.isDark())
+    # Calculator(darkdetect.isDark())
     Calculator(True)
