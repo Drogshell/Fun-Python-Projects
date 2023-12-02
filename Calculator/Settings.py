@@ -28,11 +28,11 @@ NUM_POSITIONS = {
 }
 
 MATH_POSITIONS = {
-    '/': {"col": 3, "row": 2, "character": '', "operator": '/', "image path": "Images/divide_light.png"},
-    '*': {"col": 3, "row": 3, "character": 'x', "operator": '*', "image path": None},
-    '-': {"col": 3, "row": 4, "character": '-', "operator": '-', "image path": None},
-    '=': {"col": 3, "row": 6, "character": '=', "operator": '=', "image path": None},
-    '+': {"col": 3, "row": 5, "character": '+', "operator": '+', "image path": None}
+    '/': {"col": 3, "row": 2, "character": '', "image path": {"light": "Images/divide_light.png", "dark": "Images/divide_dark.png"}},
+    '*': {"col": 3, "row": 3, "character": 'x', "image path": None},
+    '-': {"col": 3, "row": 4, "character": '-', "image path": None},
+    '=': {"col": 3, "row": 6, "character": '=', "image path": None},
+    '+': {"col": 3, "row": 5, "character": '+', "image path": None}
 }
 
 OPERATORS = {
@@ -41,16 +41,17 @@ OPERATORS = {
     'percent': {"col": 2, "row": 2, "text": '%', "image path": None}
 }
 
-BLACK = "#000000"
+BLACK = "#131313"
 WHITE = "#FFFFFF"
 
+# First colour is light mode, second is dark mode
 COLOURS = {
-    "primary": {"fg": ("#6200EE", "#BB86FC"), "hover": ("#3700B3", "#3700B3"), "text": ("#FFFFFF","#000000")},
-    "secondary": {"fg": ("#018786", "#03DAC6"), "hover": ("#efefed", "#686868"), "text": ("#FFFFFF","#000000")},
+    "light-purple": {"fg": ("#F7EFF3", "#241821"), "hover": ("#DED7DA", "#483E46"), "text": ("#1E1048","#E6DEFF")},
+    "purple": {"fg": ("#E6DEFF", "#4B388C"), "hover": ("#D1C8E5", "#685E8D"), "text": ("#1E1048","#E6DEFF")},
 
 }
 
 TITLE_BAR_HEX_COLOURS = {
-    "dark": 0x00000000,
+    "dark": 0x131313,
     "light": 0x00FFFFFF
 }
