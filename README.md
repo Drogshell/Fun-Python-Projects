@@ -1,6 +1,6 @@
-# Simple TKinter Projects
-## This will be a repository with a few projects that document my learning of TKinter and Python. These are relatively simple yet fun apps.
-### More complex Python apps will get their own dedicated repositories.
+# Python Projects that range from beginner to intermediate
+## This will be a repository of projects that document my learning of Python as well as Tkinter and any other python libraries. I'm starting off with relatively simple yet fun apps, then moving on too more complex ones.
+### Very large and complex Python apps will get their own dedicated repositories.
 
 ### This is a QR code generator app.
 This app can dynamically create QR codes based on what is entered in the text field.
